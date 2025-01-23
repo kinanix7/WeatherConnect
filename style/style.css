@@ -1,0 +1,140 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+
+:root {
+    --primary-color: #5598fd;
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    min-height: 100vh;
+    background-size: cover;
+    background-position: center;
+    transition: background-image 0.3s ease;
+    padding: 2rem;
+}
+
+.wrapper {
+    max-width: 1400px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 29%);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 50%);
+}
+
+.sidebar {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 2rem;
+}
+
+.weather-icon {
+    text-align: center;
+    margin: 2rem 0;
+}
+
+.weather-icon img {
+    max-width: 150px;
+    height: auto;
+}
+
+.temperature {
+    text-align: center;
+    margin: 1.5rem 0;
+}
+
+.temperature h1 {
+    font-size: 4rem;
+    font-weight: 300;
+    margin: 0;
+    line-height: 1;
+}
+
+.temperature .temp-unit {
+    font-size: 2rem;
+    color: #666;
+}
+
+.search .form-control {
+    border-radius: 25px 0 0 25px;
+    border: 1px solid #ced4da;
+}
+
+.search .btn {
+    border-radius: 0 25px 25px 0;
+    background: var(--primary-color);
+    color: white;
+}
+
+.card {
+    background: white;
+    border-radius: 15px;
+    padding: 1.5rem;
+    height: 100%;
+    transition: transform 0.3s;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+#weather-cards .card {
+    background: white;
+    border-radius: 15px;
+    padding: 1rem;
+    height: 100%;
+    transition: transform 0.3s;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    min-width: calc(14.28% - 1rem);
+    margin: 0.5rem;
+}
+
+.day-name {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.credits {
+    text-align: center;
+    padding: 1rem;
+    color: #888;
+    font-size: 0.8rem;
+}
+.video-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.video-background video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 100%;
+    min-height: 100%;
+    object-fit: cover;
+}
+
+
+@media (max-width: 768px) {
+    .wrapper {
+        margin: 0;
+        border-radius: 0;
+    }
+    
+    .sidebar {
+        height: auto;
+    }
+
+    #weather-cards .card {
+        min-width: calc(33.33% - 1rem);
+    }
+}
+
+@media (max-width: 576px) {
+    #weather-cards .card {
+        min-width: calc(50% - 1rem);
+    }
+}
