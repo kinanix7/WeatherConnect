@@ -8,7 +8,6 @@ const mainIcon = document.getElementById("icon");
 const currentLocation = document.getElementById("location");
 const windSpeed = document.querySelector(".wind-speed");
 const humidity = document.querySelector(".humidity");
-const humidityStatus = document.querySelector(".humidity-status");
 const searchForm = document.querySelector("#search");
 const search = document.querySelector("#query");
 const weatherCards = document.querySelector("#weather-cards");
@@ -62,23 +61,6 @@ async function fetchWeather(lat, lon) {
     return await response.json();
 }
 
-
-function getMostFrequentWeatherCode(hourly, startTime) {
-    const startIndex = hourly.time.findIndex(time => time.startsWith(startTime));
-    const endIndex = startIndex + 24; 
-    
-    const dayWeatherCodes = hourly.weathercode.slice(startIndex, endIndex);
-    const weatherCodeCounts = {};
-    
-    dayWeatherCodes.forEach(code => {
-        weatherCodeCounts[code] = (weatherCodeCounts[code] || 0) + 1;
-    });
-    
-    return parseInt(Object.keys(weatherCodeCounts).reduce((a, b) => 
-        weatherCodeCounts[a] > weatherCodeCounts[b] ? a : b
-    ));
-}
-
 async function getWeatherData(city) {
     try {
         const cityData = await fetchCity(city);
@@ -95,9 +77,6 @@ async function getWeatherData(city) {
         windSpeed.innerText = Math.round(current.windspeed);
         
         humidity.innerText = `${hourly.relativehumidity_2m[currentHourIndex]}%`;
-        humidityStatus.innerText = 
-            hourly.relativehumidity_2m[currentHourIndex] <= 30 ? "Faible" : 
-            hourly.relativehumidity_2m[currentHourIndex] <= 60 ? "Normal" : "Élevé";
         
         mainIcon.src = getIcon(current.weathercode);
 
@@ -110,7 +89,6 @@ async function getWeatherData(city) {
 
 function updateForecast(weatherData) {
     const daily = weatherData.daily;
-    const hourly = weatherData.hourly;
     weatherCards.innerHTML = "";
     
     for (let i = 0; i < 7; i++) {
@@ -121,7 +99,7 @@ function updateForecast(weatherData) {
         const dayName = date.toLocaleDateString("fr-FR", { weekday: "short" });
         const dayTemp = Math.round(daily.temperature_2m_max[i]);
         
-        const weatherCode = getMostFrequentWeatherCode(hourly, daily.time[i]);
+        const weatherCode = daily.weathercode[i];
         
         card.innerHTML = `
             <div class="card-body">
@@ -134,13 +112,8 @@ function updateForecast(weatherData) {
     }
 }
 
-
 searchForm.addEventListener("submit", (e) => {
     e.preventDefault();
     currentCity = search.value.trim();
     getWeatherData(currentCity);
 });
-
-
-
-// getWeatherData("Paris");git init
